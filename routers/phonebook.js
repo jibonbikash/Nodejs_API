@@ -2,6 +2,10 @@ const router = require('express').Router();
 const Phonebook = require('../models/Phonebook');
 const {phonebookValidation} = require('../helper/PhonebookValidation');
 
+
+// Get all phone books
+// http://localhost:3000/api/phonebook
+
 router.get('/', async (req, res) => {
 
     try {
@@ -13,6 +17,8 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Add new  phone book data
+// http://localhost:3000/api/phonebook/new
 
 router.post('/new', async (req, res) => {
     try {
@@ -50,8 +56,9 @@ router.post('/new', async (req, res) => {
 
 });
 
+// http://localhost:3000/api/phonebook/update
 // Update by _id
-router.post("/update", async (req, res) => {
+router.patch("/update", async (req, res) => {
     try {
         const updatePhone = await Phonebook.updateOne({_id: req.body._id}, {
             name: req.body.name,
@@ -70,8 +77,9 @@ router.post("/update", async (req, res) => {
     }
 });
 
+// http://localhost:3000/api/phonebook/update/mobile_no
 // Update by mobile no
-router.post("/update/(:mobile)", async (req, res) => {
+router.patch("/update/(:mobile)", async (req, res) => {
     try {
 
         const mobileexist = await Phonebook.findOne({mobile: req.params.mobile});
@@ -93,7 +101,7 @@ router.post("/update/(:mobile)", async (req, res) => {
     }
 });
 
-
+// http://localhost:3000/api/phonebook/details/mobile_no
 router.get("/details/(:mobile)", async (req, res) => {
     if (req.params.mobile) {
         try {
@@ -116,6 +124,7 @@ router.get("/details/(:mobile)", async (req, res) => {
 
 });
 
+// http://localhost:3000/api/phonebook/delete/mobile_no
 router.delete("/delete/(:mobile)", async (req, res) => {
     try {
 
